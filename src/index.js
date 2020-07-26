@@ -27,18 +27,22 @@ const render = (stateData) => {
     .scaleBand()
     .domain(stateData.map((d) => d.states))
     .range([0, innerH])
-    .padding(0.5);
+    .padding(1.5);
 
   const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
 
   g.append('g').call(d3.axisLeft(yScale));
-  g.append('g').call(d3.axisBottom(xScale));
+  g.append('g').call(d3.axisBottom(xScale).tickFormat(d3.format('.2s')));
 
   g.selectAll('rect')
     .data(stateData)
     .enter()
+    .append('a')
+    .attr('id', (d) => d.states)
+    .attr('href', 'google.com')
     .append('rect')
     .attr('y', (d) => yScale(d.states))
-    .attr('height', yScale.bandwidth())
+    .attr('class', 'rectangle')
+    .attr('height', yScale.bandwidth() + 15)
     .attr('width', (d) => xScale(d.cases));
 };
