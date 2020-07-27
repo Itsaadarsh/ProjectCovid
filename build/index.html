@@ -3,20 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Covid-19 Stats</title>
+    <!-- d3.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
     <style>
-      body {
-        background-color: darkgray;
-        overflow: auto;
-        display: flex;
-        justify-content: center;
-      }
       .rectangle {
         fill: deepskyblue;
       }
-      rect:hover {
-        fill: brown;
+      .rectangle:hover {
+        opacity: 0.5;
+      }
+      .tooltip {
+        position: absolute;
+        text-align: center;
+        padding: 0.5rem;
+        background: #f6f8d9;
+        border: 1px solid #313639;
+        border-radius: 0.3rem;
+        font: 1rem;
+        font-family: cursive;
       }
       text {
         font-size: 1rem;
@@ -24,17 +29,33 @@
       }
       svg {
         transform: rotate(270deg);
-        border: black 0.4rem solid;
-        border-radius: 1rem;
       }
       .domain {
-        stroke-width: 0.1rem;
+        stroke-width: 0.2rem;
         stroke: black;
+      }
+      #svgDiv {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      h1 {
+        text-align: center;
+        font-family: cursive;
       }
     </style>
   </head>
   <body>
-    <svg width="1000" height="1000"></svg>
-    <script src="./bundle.js"></script>
+    <h1>Covid - 19 Cases by State</h1>
+    <div id="svgDiv">
+      <svg width="900" height="1100"></svg>
+    </div>
+    <script src="./state.bundle.js"></script>
+    <!-- Saving State Name to localStorage inoder for the second page to extract it -->
+    <script>
+      function gettingStateName(e) {
+        localStorage.setItem('stateName', e.id);
+      }
+    </script>
   </body>
 </html>
