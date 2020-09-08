@@ -5,8 +5,8 @@ import * as d3 from 'd3';
 import path from 'path';
 
 // Loading .csv using d3
-d3.csv(path.resolve(__dirname, 'states.csv')).then((data) => {
-  data.forEach((caseChange) => {
+d3.csv(path.resolve(__dirname, 'states.csv')).then(data => {
+  data.forEach(caseChange => {
     caseChange.cases = +caseChange.cases;
   });
   // Calling Main Function
@@ -14,7 +14,7 @@ d3.csv(path.resolve(__dirname, 'states.csv')).then((data) => {
 });
 
 // Main function
-const render = (stateData) => {
+const render = stateData => {
   // Declaring Variables
   const svg = d3.select('svg');
   const width = +svg.attr('width');
@@ -28,13 +28,13 @@ const render = (stateData) => {
   // Cases Scale
   const xScale = d3
     .scaleLinear()
-    .domain([0, d3.max(stateData, (d) => d.cases)])
+    .domain([0, d3.max(stateData, d => d.cases)])
     .range([0, innerW]);
 
   // States Scale
   const yScale = d3
     .scaleBand()
-    .domain(stateData.map((d) => d.states))
+    .domain(stateData.map(d => d.states))
     .range([0, innerH])
     .padding(1.5);
 
@@ -56,11 +56,11 @@ const render = (stateData) => {
     .data(stateData)
     .enter()
     .append('a') // Anchor Tag (<a> <a/>)
-    .attr('id', (d) => d.states)
+    .attr('id', d => d.states)
     .attr('href', 'county.html')
     .attr('onclick', 'gettingStateName(this)')
     // Hover Effects
-    .on('mouseover', (d) => {
+    .on('mouseover', d => {
       d3.select(this).transition().duration('50');
       div.transition().duration('50').style('opacity', 1);
       div
@@ -68,13 +68,13 @@ const render = (stateData) => {
         .style('left', d3.event.pageX + 10 + 'px')
         .style('top', d3.event.pageY - 15 + 'px');
     })
-    .on('mouseout', (d) => {
+    .on('mouseout', d => {
       d3.select(this).transition().duration('50').attr('opacity', '1');
       div.transition().duration('50').style('opacity', 0);
     })
     .append('rect')
-    .attr('y', (d) => yScale(d.states))
+    .attr('y', d => yScale(d.states))
     .attr('class', 'rectangle')
     .attr('height', yScale.bandwidth() + 15)
-    .attr('width', (d) => xScale(d.cases));
+    .attr('width', d => xScale(d.cases));
 };
